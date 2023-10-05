@@ -1,3 +1,23 @@
+controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
+    projectile = sprites.createProjectileFromSprite(img`
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . 2 2 2 2 . . . 
+        . . . . . . . 2 2 1 1 1 1 2 . . 
+        . . . . 2 2 3 3 1 1 1 1 1 1 . . 
+        . . 3 3 3 3 1 1 1 1 1 1 1 1 . . 
+        . . 1 1 1 1 1 1 1 1 1 1 1 1 . . 
+        . . 3 3 2 2 3 1 1 1 1 1 1 1 . . 
+        . . . . . . 2 2 3 1 1 1 1 2 . . 
+        . . . . . . . . . 2 2 2 2 . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        . . . . . . . . . . . . . . . . 
+        `, mySprite, 50, 50)
+})
 controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
     sprites.destroy(starting_character)
     mySprite = sprites.create(img`
@@ -98,14 +118,14 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
-        `, SpriteKind.Player)
+        `, SpriteKind.Projectile)
     tiles.setCurrentTilemap(tilemap`level1`)
-    info.setScore(0)
 })
 let mySprite4: Sprite = null
 let mySprite3: Sprite = null
 let myEnemy: Sprite = null
 let mySprite: Sprite = null
+let projectile: Sprite = null
 let starting_character: Sprite = null
 starting_character = sprites.create(img`
     . . . . f f f f . . . . . 
