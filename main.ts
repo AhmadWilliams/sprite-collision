@@ -112,6 +112,10 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSpr
     burger.setPosition(randint(0, 120), randint(0, 160))
     burger.setStayInScreen(true)
 })
+sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
+    info.changeLifeBy(-1)
+    mySprite.startEffect(effects.disintegrate)
+})
 let mySprite4: Sprite = null
 let myEnemy: Sprite = null
 let burger: Sprite = null
