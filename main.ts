@@ -87,6 +87,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         ........................
         ........................
         `, SpriteKind.Enemy)
+    myEnemy.setVelocity(randint(0, 120), randint(0, 160))
+    myEnemy.setPosition(randint(0, 120), randint(0, 160))
+    myEnemy.setStayInScreen(true)
     mySprite4 = sprites.create(img`
         . . . . . . . . . . . . . . . . 
         . . . . . . . . . . . . . . . . 
@@ -106,6 +109,9 @@ controller.A.onEvent(ControllerButtonEvent.Pressed, function () {
         . . . . . . . . . . . . . . . . 
         `, SpriteKind.Projectile)
     tiles.setCurrentTilemap(tilemap`level1`)
+})
+info.onLifeZero(function () {
+	
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     info.changeScoreBy(1)
