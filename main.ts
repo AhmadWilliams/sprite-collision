@@ -176,7 +176,7 @@ game.onUpdateInterval(5000, function () {
         ........................
         ........................
         `, SpriteKind.Enemy)
-    myEnemy.follow(mySprite, 5)
+    myEnemy.follow(mySprite, 10)
     tiles.placeOnRandomTile(myEnemy, sprites.dungeon.darkGroundNorthWest0)
     myEnemy.setStayInScreen(true)
 })
