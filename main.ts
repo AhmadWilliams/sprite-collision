@@ -123,6 +123,7 @@ mySprite = sprites.create(img`
     . . . . . f f . . f f . . . . . 
     `, SpriteKind.Player)
 controller.moveSprite(mySprite)
+scene.cameraFollowSprite(mySprite)
 info.setLife(3)
 mySprite.setStayInScreen(true)
 burger = sprites.create(img`
@@ -147,6 +148,7 @@ burger.setPosition(randint(0, 120), randint(0, 160))
 burger.setStayInScreen(true)
 tiles.setCurrentTilemap(tilemap`level1`)
 game.showLongText("Press b to fire", DialogLayout.Bottom)
+info.startCountdown(150)
 game.onUpdateInterval(5000, function () {
     myEnemy = sprites.create(img`
         ........................
@@ -174,7 +176,7 @@ game.onUpdateInterval(5000, function () {
         ........................
         ........................
         `, SpriteKind.Enemy)
-    myEnemy.follow(mySprite)
+    myEnemy.follow(mySprite, 5)
     tiles.placeOnRandomTile(myEnemy, sprites.dungeon.darkGroundNorthWest0)
     myEnemy.setStayInScreen(true)
 })
