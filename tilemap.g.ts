@@ -75,9 +75,9 @@ namespace myTiles {
 . . . . . . . . . . . . . . . . 
 . 2 . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
-. . 2 . . . . . . . . . 2 2 . . 
-. . 2 . . . . . . . . 2 2 . . . 
-. 2 2 . . . . . . . . 2 . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 . . . . . . . . . . . . . . . . 
 `, [myTiles.transparency16,sprites.dungeon.darkGroundNorthWest0,sprites.dungeon.darkGroundNorthEast0,sprites.dungeon.darkGroundSouthWest0,sprites.dungeon.darkGroundSouthEast0,sprites.dungeon.darkGroundEast,sprites.dungeon.darkGroundSouth,sprites.dungeon.darkGroundWest,sprites.dungeon.darkGroundNorth,sprites.dungeon.darkGroundCenter,sprites.dungeon.floorMixed], TileScale.Sixteen);

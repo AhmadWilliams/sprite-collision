@@ -1,42 +1,45 @@
 controller.B.onEvent(ControllerButtonEvent.Pressed, function () {
-    if (rightdrct == true) {
-        bullet = sprites.createProjectileFromSprite(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . b b b b . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, mySprite, 100, 0)
-    } else if (rightdrct == false) {
-        bullet = sprites.createProjectileFromSprite(img`
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . b b b b . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            . . . . . . . . . . . . . . . . 
-            `, mySprite, -100, 0)
+    if (CurrentProjectiles < MaxProjectiles) {
+        if (rightdrct == true) {
+            bullet = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . b b b b . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, mySprite, 100, 0)
+        } else if (rightdrct == false) {
+            bullet = sprites.createProjectileFromSprite(img`
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . b b b b . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                . . . . . . . . . . . . . . . . 
+                `, mySprite, -100, 0)
+        }
+        CurrentProjectiles += 1
     }
 })
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
@@ -88,11 +91,17 @@ info.onLifeZero(function () {
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Food, function (sprite, otherSprite) {
     info.changeScoreBy(1)
     burger.setPosition(randint(0, 120), randint(0, 160))
-    burger.setStayInScreen(true)
+    burger.setStayInScreen(false)
+})
+sprites.onDestroyed(SpriteKind.Projectile, function (sprite) {
+    CurrentProjectiles += -1
 })
 sprites.onOverlap(SpriteKind.Projectile, SpriteKind.Enemy, function (sprite, otherSprite) {
     sprites.destroy(sprite, effects.none, 100)
     sprites.destroy(otherSprite, effects.disintegrate, 100)
+    if (Enemyvelocity < TopSpeed) {
+        Enemyvelocity += 5
+    }
 })
 sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSprite) {
     info.changeLifeBy(-1)
@@ -102,8 +111,35 @@ sprites.onOverlap(SpriteKind.Player, SpriteKind.Enemy, function (sprite, otherSp
 let myEnemy: Sprite = null
 let bullet: Sprite = null
 let rightdrct = false
+let TopSpeed = 0
+let Enemyvelocity = 0
+let CurrentProjectiles = 0
+let MaxProjectiles = 0
 let burger: Sprite = null
 let mySprite: Sprite = null
+let TPDiff = 0
+let VDiff = 0
+let TDiff = 0
+let EDiff = 0
+let Difficulty = game.askForString("easy, normal, hard")
+if (Difficulty == "easy") {
+    EDiff = 1.5
+    TDiff = 0.8
+    VDiff = 0.8
+    TPDiff = 0.8
+} else if (Difficulty == "normal") {
+    TPDiff = 0
+    EDiff = 0.75
+    TDiff = 1
+    VDiff = 1
+} else if (Difficulty == "hard") {
+    TPDiff = 1.4
+    EDiff = 0.5
+    TDiff = 1.2
+    VDiff = 1.2
+}
+let story = " you have just reached the dungeon."
+game.splash("Hello," + story + " Get as much food as you can.")
 mySprite = sprites.create(img`
     . . . . . . f f f f . . . . . . 
     . . . . f f f 2 2 f f f . . . . 
@@ -145,9 +181,14 @@ burger = sprites.create(img`
     . . . c c c c c e e e e e . . . 
     `, SpriteKind.Food)
 burger.setPosition(randint(0, 120), randint(0, 160))
-burger.setStayInScreen(true)
+burger.setStayInScreen(false)
 tiles.setCurrentTilemap(tilemap`level1`)
-game.showLongText("Press b to fire", DialogLayout.Bottom)
+game.showLongText("Press B Button to fire", DialogLayout.Bottom)
+MaxProjectiles = 4 * EDiff
+CurrentProjectiles = 0
+Enemyvelocity = 50 * VDiff
+TopSpeed = 100 * TDiff
+let TP = 25 * TPDiff
 info.startCountdown(150)
 game.onUpdateInterval(5000, function () {
     myEnemy = sprites.create(img`
@@ -176,7 +217,8 @@ game.onUpdateInterval(5000, function () {
         ........................
         ........................
         `, SpriteKind.Enemy)
-    myEnemy.follow(mySprite, 10)
+    myEnemy.follow(mySprite, TP)
+    myEnemy.setVelocity(Enemyvelocity, Enemyvelocity)
     tiles.placeOnRandomTile(myEnemy, sprites.dungeon.darkGroundNorthWest0)
-    myEnemy.setStayInScreen(true)
+    myEnemy.setStayInScreen(false)
 })
